@@ -1,0 +1,65 @@
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[project]
+name = "resilientflow"
+version = "0.1.0"
+description = "Global infrastructure resilience analysis system using Causal AI"
+readme = "README.md"
+requires-python = ">=3.10"
+license = { text = "MIT" }
+authors = [
+  { name = "Your Name", email = "your.email@example.com" },
+]
+
+# メインの依存ライブラリ
+dependencies = [
+    "numpy<2.0.0",               # Tigramite等がnumpy 2.0系に未対応の場合があるため固定
+    "pandas>=2.0.0",
+    "scikit-learn>=1.3.0",
+    "scipy>=1.10.0",
+    "statsmodels>=0.14.0",
+    
+    # --- 因果推論 & Graph ---
+    # Tigramite (PCMCI+)
+    "tigramite>=5.2.0",
+    # Dowhy (汎用因果推論)
+    "dowhy>=0.11",
+    # PyTorch Geometric Temporal (時空間GNN)
+    "torch-geometric-temporal>=0.54.0",
+    # Causica は依存関係が複雑なため、必要に応じてGit install推奨だが一旦記載
+    "causica>=0.0.1", 
+
+    # --- データエンジニアリング ---
+    "gdelt>=0.1.10.8",
+    "pydantic>=2.5",
+    "pyarrow>=14.0",              # Parquet処理用
+    "requests>=2.31",
+
+    # --- 可視化・Webアプリ ---
+    "dash>=2.14",
+    "dash-cytoscape>=0.3.0",
+    "plotly>=5.18",
+    "networkx>=3.0",
+    "matplotlib>=3.7"
+]
+
+[project.optional-dependencies]
+dev = [
+    "pytest>=7.4",
+    "pytest-cov>=4.1",
+    "ruff>=0.1.6",
+    "black>=23.11",
+    "jupyterlab>=4.0",
+    "ipykernel>=6.29",
+    "pre-commit>=3.5",
+]
+
+# パッケージの場所を明示（srcレイアウト用）
+[tool.hatch.build.targets.wheel]
+packages = ["src/resilientflow"]
+
+[tool.ruff]
+line-length = 88
+target-version = "py310"
