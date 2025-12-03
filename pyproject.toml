@@ -1,0 +1,67 @@
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[project]
+name = "resilientflow"
+version = "0.1.0"
+description = "Global infrastructure resilience analysis system using Causal AI"
+readme = "README.md"
+requires-python = ">=3.10"
+license = { text = "MIT" }
+authors = [
+  { name = "ResilientFlow Dev", email = "dev@example.com" },
+]
+
+# プロジェクトで使用する全ライブラリ
+dependencies = [
+    # --- Core Data Science ---
+    "numpy<2.0.0",       # Tigramiteとの互換性のため2.0未満に固定
+    "pandas>=2.0.0",
+    "scipy",
+    "scikit-learn",
+    "statsmodels",
+    "joblib",
+    
+    # --- Data Engineering ---
+    "requests",
+    "gdelt",
+    "pyarrow",           # Parquet保存用
+    "fastparquet",
+
+    # --- Causal Discovery & Inference (Layer 2) ---
+    "tigramite",         # 時系列因果探索 (PCMCI)
+    "dowhy",             # 因果推論 (GCM)
+    "networkx",          # グラフ構造処理
+    "dcor",              # Tigramiteの独立性検定用
+    "pygam",             # Tigramiteの非線形検定用
+
+    # --- Spatial Modeling (Layer 2 Phase 2) ---
+    "torch",
+    # ※ torch-geometric系は環境依存が激しいため、Docker化の際は注意が必要ですが一旦記載
+    "torch_geometric",
+    "torch_geometric_temporal",
+
+    # --- Visualization (Layer 3) ---
+    "matplotlib",
+    "dash>=2.16.0",
+    "dash-cytoscape",
+    "dash-bootstrap-components"
+]
+
+[project.optional-dependencies]
+dev = [
+    "pytest",
+    "ruff",
+    "black",
+    "jupyterlab",
+    "ipykernel"
+]
+
+# ソースコードの場所を明示 (Src Layout)
+[tool.hatch.build.targets.wheel]
+packages = ["src/resilientflow"]
+
+[tool.ruff]
+line-length = 88
+target-version = "py310"
