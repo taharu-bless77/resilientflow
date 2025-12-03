@@ -1,0 +1,26 @@
+cat <<EOF > .dockerignore
+# Git
+.git
+.gitignore
+
+# Python
+__pycache__
+*.pyc
+*.pyo
+*.pyd
+.Python
+env
+venv
+.venv
+pip-log.txt
+pip-delete-this-directory.txt
+
+# Data (生データは含めないのが一般的だが、デモ用にprocessedだけ含める戦略もあり)
+# 今回はサイズ削減のためrawは除外
+data/01_raw
+data/02_intermediate
+
+# IDE
+.vscode
+.idea
+EOF

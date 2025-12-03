@@ -1,0 +1,13 @@
+services:
+  app:
+    build: .
+    container_name: resilientflow-app
+    ports:
+      - "8050:8050"
+    volumes:
+      # ホストのコードをマウントすることで、開発中の変更を即反映 (Hot Reload)
+      - ./src:/app/src
+      - ./data:/app/data
+    environment:
+      - PYTHONUNBUFFERED=1
+    command: python src/resilientflow/viz/app.py
